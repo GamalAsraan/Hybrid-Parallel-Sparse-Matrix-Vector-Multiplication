@@ -59,9 +59,19 @@
 - Potential optimizations: reorder rows, use nonblocking collectives, tune OpenMP schedule.
 
 ## 5. Reproducibility
-- Build: `g++ -std=c++17 -fopenmp main.cpp matrix_genrator.cpp parallel_mpi.cpp sequential.cpp -o app`
-- Run: `./app` or `mpirun -np <P> ./app`
-- Plot: `python3 graphs/plot_times.py`
+- **Prereqs**: C++17 compiler with OpenMP, MPI runtime (`mpirun`), Python 3 with `matplotlib`.
+- **Build** (from repo root):
+	- `g++ -std=c++17 -fopenmp main.cpp matrix_genrator.cpp parallel_mpi.cpp sequential.cpp -o app`
+	- Or use `mpicxx -std=c++17 -fopenmp main.cpp matrix_genrator.cpp parallel_mpi.cpp sequential.cpp -o app`
+- **Run**:
+	- Single rank: `./app`
+	- Multi-rank: `mpirun -np <P> ./app`
+- **Outputs**: `graphs/times.csv`, `graphs/speedup.csv` (and `graphs/*.png` after plotting).
+- **Plot**:
+	- `python3 -m venv graphs/.venv && source graphs/.venv/bin/activate`
+	- `python -m pip install --upgrade pip matplotlib`
+	- `python graphs/plot.py`
+- **All-in-one**: `./run_all.sh`
 
 ## 6. Conclusion
 - Summarize key findings and when parallelism is beneficial.
